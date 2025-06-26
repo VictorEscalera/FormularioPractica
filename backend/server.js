@@ -1,39 +1,34 @@
 // server.js
-require('dotenv').config(); // carga variables .env
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 
 const app = express();
 
-// Middleware para CORS - permite todas las solicitudes (modifica origin para producción)
-app.use(cors());
+// Middleware
+app.use(cors());               // Permite CORS para cualquier origen (ajusta en producción)
+app.use(express.json());       // Parsear JSON
 
-// Middleware para parsear JSON
-app.use(bodyParser.json());
-app.use(express.json());
-
-// Conexión a MongoDB Atlas con URI en variable de entorno
+// Conexión a MongoDB Atlas usando variable de entorno
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ Conectado a MongoDB Atlas'))
-  .catch(err => {
-    console.error('❌ Error de conexión a MongoDB:', err);
-    process.exit(1); // salir si no conecta
+  .catch((err) => {
+    console.error('❌ Error de conexión:', err);
+    process.exit(1);
   });
 
-// Esquema y modelo para datos del formulario
+// Modelo Mongoose
 const UsuarioSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
-  email: { type: String, required: true },
+  email: { type: email, required: true },
   carrera: String,
-  telefono: String,
-  fecha: String,
+  telefono: Number,
+  fecha: Date,
 });
-
 const Usuario = mongoose.model('Usuario', UsuarioSchema);
 
-// Ruta POST para recibir datos y guardarlos
+// Ruta POST para guardar datos
 app.post('/enviar', async (req, res) => {
   try {
     const nuevoUsuario = new Usuario(req.body);
@@ -46,7 +41,5 @@ app.post('/enviar', async (req, res) => {
 });
 
 // Puerto dinámico para Render o local
-const PORT = process.env.PORT ;
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
-});
+const PORT = process.env.PORT;
+app.listen(PORT, () => console.log(`🚀 Servidor corriendo en puerto ${PORT}`));
