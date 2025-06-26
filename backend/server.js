@@ -13,10 +13,10 @@ mongoose.connect(process.env.MONGO_URI)
 
 const UsuarioSchema = new mongoose.Schema({
   nombre: String,
-  email: String,
+  email: email,
   carrera: String,
-  telefono: String,
-  fecha: String,
+  telefono: Number,
+  fecha: Date,
 });
 
 const Usuario = mongoose.model('Usuario', UsuarioSchema);
