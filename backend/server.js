@@ -8,8 +8,16 @@ app.use(cors());
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('✅ Conectado a MongoDB'))
-  .catch(err => console.error('❌ Error de conexión:', err));
+  .then(() => {
+    console.log("Base de datos conectada");
+    app.listen(PORT, () => {
+      console.log(`Servidor corriendo en el puerto ${PORT}`);
+    });
+  })
+  .catch(err => {
+    console.error("Error al conectar MongoDB:", err.message);
+  });
+
 
 const UsuarioSchema = new mongoose.Schema({
   nombre: String,
@@ -23,13 +31,11 @@ const Usuario = mongoose.model('Usuario', UsuarioSchema);
 
 app.post('/enviar', async (req, res) => {
   try {
-    console.log('Datos recibidos:', req.body);
-    const nuevoUsuario = new Usuario(req.body);
-    await nuevoUsuario.save();
-    res.json({ mensaje: '✅ Datos guardados correctamente' });
+    await Usuario.create(req.body);
+    res.status(200).send('Datos guardados');
   } catch (error) {
-    console.error('❌ Error al guardar en la DB:', error);
-    res.status(500).json({ mensaje: '❌ Error al guardar en la base de datos', error: error.message });
+    console.error("Error al guardar en la DB:", error.message);
+    res.status(500).send("Error del servidor");
   }
 });
 
