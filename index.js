@@ -10,7 +10,7 @@ document.getElementById("miFormulario").addEventListener("submit", async functio
   };
 
   try {
-  const response = await fetch('https://formulario-backend.onrender.com/enviar', {
+  const response = await fetch('https://formulariobackend.onrender.com', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(datos),
