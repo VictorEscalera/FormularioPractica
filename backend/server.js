@@ -19,13 +19,14 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   });
 
 // Esquema y modelo
-const UsuarioSchema = new mongoose.Schema({
-  nombre: String,
-  email: email,
-  carrera: String,
-  telefono: Number,
-  fecha: Date,
+const nuevoUsuario = new Usuario({
+  nombre: req.body.nombre,
+  email: req.body.email,       // ✅ Corrección aquí
+  carrera: req.body.carrera,
+  telefono: req.body.telefono,
+  fecha: req.body.fecha,
 });
+
 
 const Usuario = mongoose.model('Usuario', UsuarioSchema);
 
