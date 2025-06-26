@@ -1,44 +1,43 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
 
-// ✅ Configurar CORS para permitir desde cualquier origen
-app.use(cors()); // ⚠️ Úsalo solo mientras desarrollas
+// 🔥 CORS MANUAL (IGNORA "cors" package)
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*"); // o pon tu dominio exacto aquí
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
 
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log("✅ Conectado a MongoDB Atlas"))
-.catch(err => console.error("❌ Error de conexión:", err));
+// ✅ Conexión a MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ Conectado a MongoDB"))
+  .catch(err => console.error("❌ Error:", err));
 
-const UsuarioSchema = new mongoose.Schema({
+// ✅ Esquema
+const Usuario = mongoose.model("Usuario", new mongoose.Schema({
   nombre: String,
   email: email,
   carrera: String,
-  telefono: Number,
+  telefono: number,
   fecha: Date,
-});
+}));
 
-const Usuario = mongoose.model("Usuario", UsuarioSchema);
-
+// ✅ Ruta POST
 app.post("/enviar", async (req, res) => {
   try {
-    const nuevoUsuario = new Usuario(req.body);
-    await nuevoUsuario.save();
-    res.json({ mensaje: "✅ Datos guardados correctamente" });
-  } catch (error) {
-    console.error("❌ Error al guardar:", error);
-    res.status(500).json({ mensaje: "❌ Error del servidor" });
+    const nuevo = new Usuario(req.body);
+    await nuevo.save();
+    res.json({ mensaje: "✅ Guardado en MongoDB" });
+  } catch (err) {
+    res.status(500).json({ mensaje: "❌ Error del servidor", error: err });
   }
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
-});
+app.listen(PORT, () => console.log("🚀 Server en puerto", PORT));
