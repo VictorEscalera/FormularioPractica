@@ -1,47 +1,52 @@
-const express = require("express");
-const mongoose = require("mongoose");
-require("dotenv").config();
+// server.js
+require('dotenv').config(); // carga variables .env
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
 
-// 🔥 CORS MANUAL (IGNORA "cors" package)
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*"); // o pon tu dominio exacto aquí
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  next();
-});
+// Middleware para CORS - permite todas las solicitudes (modifica origin para producción)
+app.use(cors());
 
+// Middleware para parsear JSON
+app.use(bodyParser.json());
 app.use(express.json());
 
-// ✅ Conexión a MongoDB
+// Conexión a MongoDB Atlas con URI en variable de entorno
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ Conectado a MongoDB"))
-  .catch(err => console.error("❌ Error:", err));
+  .then(() => console.log('✅ Conectado a MongoDB Atlas'))
+  .catch(err => {
+    console.error('❌ Error de conexión a MongoDB:', err);
+    process.exit(1); // salir si no conecta
+  });
 
-// ✅ Esquema
-const Usuario = mongoose.model("Usuario", new mongoose.Schema({
-  nombre: String,
-  email: email,
+// Esquema y modelo para datos del formulario
+const UsuarioSchema = new mongoose.Schema({
+  nombre: { type: String, required: true },
+  email: { type: String, required: true },
   carrera: String,
-  telefono: number,
-  fecha: Date,
-}));
+  telefono: String,
+  fecha: String,
+});
 
-// ✅ Ruta POST
-app.post("/enviar", async (req, res) => {
+const Usuario = mongoose.model('Usuario', UsuarioSchema);
+
+// Ruta POST para recibir datos y guardarlos
+app.post('/enviar', async (req, res) => {
   try {
-    const nuevo = new Usuario(req.body);
-    await nuevo.save();
-    res.json({ mensaje: "✅ Guardado en MongoDB" });
-  } catch (err) {
-    res.status(500).json({ mensaje: "❌ Error del servidor", error: err });
+    const nuevoUsuario = new Usuario(req.body);
+    await nuevoUsuario.save();
+    res.json({ mensaje: '✅ Datos guardados correctamente' });
+  } catch (error) {
+    console.error('❌ Error al guardar:', error);
+    res.status(500).json({ mensaje: '❌ Error al guardar datos', error: error.message });
   }
 });
 
-const PORT = process.env.PORT;
+// Puerto dinámico para Render o local
+const PORT = process.env.PORT ;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
 });
-
-
