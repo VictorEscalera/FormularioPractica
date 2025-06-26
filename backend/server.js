@@ -5,12 +5,11 @@ require("dotenv").config();
 
 const app = express();
 
-// ✅ CONFIGURAR CORS PARA CUALQUIER ORIGEN (PRUEBAS)
-app.use(cors()); // Permitir cualquier origen por ahora
+// ✅ Configurar CORS para permitir desde cualquier origen
+app.use(cors()); // ⚠️ Úsalo solo mientras desarrollas
 
 app.use(express.json());
 
-// ✅ CONEXIÓN A MONGODB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -18,7 +17,6 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log("✅ Conectado a MongoDB Atlas"))
 .catch(err => console.error("❌ Error de conexión:", err));
 
-// ✅ ESQUEMA Y MODELO
 const UsuarioSchema = new mongoose.Schema({
   nombre: String,
   email: email,
@@ -29,19 +27,17 @@ const UsuarioSchema = new mongoose.Schema({
 
 const Usuario = mongoose.model("Usuario", UsuarioSchema);
 
-// ✅ RUTA PARA GUARDAR DATOS
 app.post("/enviar", async (req, res) => {
   try {
     const nuevoUsuario = new Usuario(req.body);
     await nuevoUsuario.save();
-    res.json({ mensaje: "✅ Datos guardados en MongoDB" });
+    res.json({ mensaje: "✅ Datos guardados correctamente" });
   } catch (error) {
     console.error("❌ Error al guardar:", error);
-    res.status(500).json({ mensaje: "❌ Error en el servidor", error });
+    res.status(500).json({ mensaje: "❌ Error del servidor" });
   }
 });
 
-// ✅ PUERTO PARA RENDER
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
