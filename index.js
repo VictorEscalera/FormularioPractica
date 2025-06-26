@@ -11,10 +11,10 @@ document.getElementById('miFormulario').addEventListener('submit', async (e) => 
 
   try {
     const response = await fetch('https://formulariobackend.onrender.com/enviar', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(datos),
-    });
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(datos),
+});
 
     const result = await response.json();
     alert(result.mensaje);
