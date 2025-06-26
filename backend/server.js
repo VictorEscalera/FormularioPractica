@@ -5,16 +5,12 @@ require("dotenv").config();
 
 const app = express();
 
-// ✅ Configurar CORS correctamente
-app.use(cors({
-  origin: 'http://127.0.0.1:5500', // o 'http://localhost:5500' si usas Live Server
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type']
-}));
+// ✅ CONFIGURAR CORS PARA CUALQUIER ORIGEN (PRUEBAS)
+app.use(cors()); // Permitir cualquier origen por ahora
 
 app.use(express.json());
 
-// ✅ Conexión a MongoDB Atlas
+// ✅ CONEXIÓN A MONGODB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -22,33 +18,31 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log("✅ Conectado a MongoDB Atlas"))
 .catch(err => console.error("❌ Error de conexión:", err));
 
-// ✅ Esquema
+// ✅ ESQUEMA Y MODELO
 const UsuarioSchema = new mongoose.Schema({
   nombre: String,
-  email: String,
+  email: email,
   carrera: String,
-  telefono: String,
-  fecha: String,
+  telefono: Number,
+  fecha: Date,
 });
 
 const Usuario = mongoose.model("Usuario", UsuarioSchema);
 
-// ✅ Ruta POST
+// ✅ RUTA PARA GUARDAR DATOS
 app.post("/enviar", async (req, res) => {
   try {
     const nuevoUsuario = new Usuario(req.body);
     await nuevoUsuario.save();
     res.json({ mensaje: "✅ Datos guardados en MongoDB" });
   } catch (error) {
-    console.error("❌ Error:", error);
-    res.status(500).json({ mensaje: "❌ Error al guardar", error });
+    console.error("❌ Error al guardar:", error);
+    res.status(500).json({ mensaje: "❌ Error en el servidor", error });
   }
 });
 
-// ✅ Puerto
-const PORT = process.env.PORT || 10000;
-
+// ✅ PUERTO PARA RENDER
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
 });
-
