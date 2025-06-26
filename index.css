@@ -1,0 +1,112 @@
+form{
+    width: 400px;   /* Ancho del formulario */
+    padding: 20px;  /* Espaciado interno */
+    background-color: #fff; /* Fondo blanco */
+    margin: 0 auto; /* Centrar horizontalmente */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente */
+}
+
+label {
+    display: block; /* Hace que el label ocupe toda la línea */
+    margin-bottom: 10px; /* Espacio debajo del label */
+    font-weight: bolder; /* Texto en negrita */
+    color: #030bf6; /* Color azul */
+}
+
+input{
+    height: 25px; /* Altura del input */
+    border: 2px solid #030bf6; /* Borde azul */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 5px; /* Espaciado interno */
+    width: 100%; /* Ocupa todo el ancho disponible */
+}
+
+#nombre {
+    /* Estilos para el input de nombre */
+    margin-bottom: 15px; /* Espacio debajo */
+    font-size: 16px; /* Tamaño de fuente */
+    color: #333; /* Color de texto */
+    border-color: #030bf6; /* Borde azul */
+    transition: border-color 0.3s ease; /* Transición suave del borde */
+}
+
+#email {
+    /* Estilos para el input de correo */
+    margin-bottom: 15px; /* Espacio debajo */
+    font-size: 16px;        /* Tamaño de fuente */
+    color: #333; /* Color de texto */
+    border-color: #030bf6; /* Borde azul */
+    transition: border-color 0.3s ease; /* Transición suave del borde */
+}
+
+#carrera {
+    /* Estilos para el input de carrera */
+    margin-bottom: 15px; /* Espacio debajo */
+    font-size: 16px; /* Tamaño de fuente */
+    color: #333; /* Color de texto */
+    border-color: #030bf6; /* Borde azul */
+    transition: border-color 0.3s ease; /* Transición suave del borde */
+}
+
+#telefono {
+    /* Estilos para el input de teléfono */
+    margin-bottom: 15px; /* Espacio debajo */
+    font-size: 16px;    /* Tamaño de fuente */
+    color: #333; /* Color de texto */
+    border-color: #030bf6; /* Borde azul */
+    transition: border-color 0.3s ease; /* Transición suave del borde */
+    padding-left: 10px; /* Espacio a la izquierda */
+    background-image: url('https://cdn-icons-png.flaticon.com/512/561/561127.png'); /* Icono de teléfono */
+    background-repeat: no-repeat; /* No repetir el icono */
+    background-position: 10px center; /* Posición del icono */
+    background-size: 20px; /* Tamaño del icono */
+    padding-left: 40px; /* Espacio para el icono */
+    box-sizing: border-box; /* El padding no afecta el ancho total */   
+}
+
+#fecha {
+    /* Estilos para el input de fecha */
+    margin-bottom: 15px; /* Espacio debajo */
+    font-size: 16px; /* Tamaño de fuente */
+    color: #333; /* Color de texto */
+    border-color: #030bf6; /* Borde azul */
+    transition: border-color 0.3s ease; /* Transición suave del borde */
+}
+
+button {
+    background-color: #030bf6; /* Fondo azul */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    padding: 10px 15px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor tipo mano */
+    font-size: 16px; /* Tamaño de fuente */
+    transition: background-color 0.3s ease, transform 0.2s cubic-bezier(0.4,2,0.6,1), box-shadow 0.2s cubic-bezier(0.4,2,0.6,1); /* Transiciones animadas */
+    width: 100%; /* Ocupa todo el ancho */
+    box-shadow: 0 4px 14px 0 rgba(3,11,246,0.15); /* Sombra */
+    position: relative; /* Para el efecto de onda */
+    overflow: hidden; /* Oculta el desbordamiento del efecto */
+}
+button::after {
+    content: ''; /* Elemento vacío para el efecto de onda */
+    position: absolute; /* Posición absoluta */
+    left: 50%; /* Centrado horizontal */
+    top: 50%; /* Centrado vertical */
+    width: 0; /* Ancho inicial */
+    height: 0; /* Alto inicial */
+    background: rgba(255,255,255,0.3); /* Color del efecto */
+    border-radius: 100%; /* Forma circular */
+    transform: translate(-50%, -50%); /* Centrar el efecto */
+    transition: width 0.4s cubic-bezier(0.4,2,0.6,1), height 0.4s cubic-bezier(0.4,2,0.6,1); /* Transición del efecto */
+    z-index: 1; /* Sobre el botón */
+}
+button:active::after {
+    width: 200px; /* Ancho del efecto al hacer click */
+    height: 200px; /* Alto del efecto al hacer click */
+}
+button:hover {
+    background-color: #0200c4; /* Fondo más oscuro al pasar el mouse */
+    transform: scale(1.05) rotate(-1deg); /* Efecto de escala y rotación */
+    box-shadow: 0 8px 24px 0 rgba(3,11,246,0.25); /* Sombra más intensa */
+}
+
