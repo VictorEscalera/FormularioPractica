@@ -1,12 +1,12 @@
-document.getElementById("miFormulario").addEventListener("submit", async function (e) {
+document.getElementById('miFormulario').addEventListener('submit', async function (e) {
   e.preventDefault();
 
   const datos = {
-    nombre: document.getElementById("nombre").value,
-    email: document.getElementById("email").value,
-    carrera: document.getElementById("carrera").value,
-    telefono: document.getElementById("telefono").value,
-    fecha: document.getElementById("fecha").value,
+    nombre: document.getElementById('nombre').value,
+    email: document.getElementById('email').value,
+    carrera: document.getElementById('carrera').value,
+    telefono: document.getElementById('telefono').value,
+    fecha: document.getElementById('fecha').value,
   };
 
   try {
@@ -18,9 +18,8 @@ document.getElementById("miFormulario").addEventListener("submit", async functio
 
     const result = await response.json();
     alert(result.mensaje || 'Formulario enviado correctamente');
-    document.getElementById("miFormulario").reset();
+    this.reset();
   } catch (error) {
-    alert("❌ Error al enviar datos: " + error.message);
-    console.error(error);
+    alert('Error al enviar datos: ' + error.message);
   }
 });
