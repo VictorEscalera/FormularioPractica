@@ -9,22 +9,20 @@
 <body>
   <h1>Formulario para base de datos en Mongo</h1>
   <form id="miFormulario" class="form">
-
     <label for="nombre">Nombre:</label>
     <input name="nombre" type="text" id="nombre" placeholder="Nombre" required><br><br>
 
     <label for="email">Correo:</label>
-    <input name="email" type="email" id="email" placeholder="Correo electrónico" required
-      pattern="[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+"><br><br>
+    <input name="email" type="email" id="email" placeholder="Correo electrónico" required><br><br>
 
     <label for="carrera">Carrera:</label>
     <input name="carrera" type="text" id="carrera" placeholder="Carrera"><br><br>
 
     <label for="telefono">Número Telefónico:</label>
-    <input name="telefono" type="number" id="telefono" placeholder="Teléfono" maxlength="10"inputmode="numeric" pattern="\d{10}"><br><br>
+    <input name="telefono" type="text" id="telefono" placeholder="Teléfono" maxlength="10" required><br><br>
 
     <label for="fecha">Fecha:</label>
-    <input name="fecha" type="date" id="fecha"><br><br>
+    <input name="fecha" type="date" id="fecha" required><br><br>
 
     <button type="submit" class="button">Enviar</button>
   </form>
@@ -32,6 +30,3 @@
   <script src="index.js"></script>
 </body>
 </html>
-
-
-

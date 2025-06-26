@@ -1,25 +1,26 @@
-document.getElementById('miFormulario').addEventListener('submit', async (e) => {
+document.getElementById("miFormulario").addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const datos = {
-    nombre: document.getElementById('nombre').value,
-    email: document.getElementById('email').value,
-    carrera: document.getElementById('carrera').value,
-    telefono: document.getElementById('telefono').value,
-    fecha: document.getElementById('fecha').value,
+    nombre: document.getElementById("nombre").value,
+    email: document.getElementById("email").value,
+    carrera: document.getElementById("carrera").value,
+    telefono: document.getElementById("telefono").value,
+    fecha: document.getElementById("fecha").value,
   };
 
   try {
     const response = await fetch('https://formulariobackend.onrender.com/enviar', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(datos),
-});
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos),
+    });
 
     const result = await response.json();
-    alert(result.mensaje);
-    document.getElementById('miFormulario').reset();
+    alert(result.mensaje || 'Formulario enviado correctamente');
+    document.getElementById("miFormulario").reset();
   } catch (error) {
-    alert('Error al enviar datos: ' + error.message);
+    alert("❌ Error al enviar datos: " + error.message);
+    console.error(error);
   }
 });
